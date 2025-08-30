@@ -1,0 +1,59 @@
+88 symbols --> 2 symbols = 1 byte --> 44 byte
+15 sensors (2 not in use)
+
+
+temperature(6 byte): 	primary  	0 - 2 byte 
+			econdary 	9 - 11 byte
+
+conductivity(6 byte):	primary		3 - 5 byte
+			econdary	12 - 14 byte
+
+pressure(3 byte):			6 - 8 byte
+
+
+Frequency f = (Byte 0×256) + Byte 1 + (Byte 2÷256)
+
+
+0CD08410767B80458F0CCA6F1107AE7D58A3987C41F0DEF2FFFFBE0000BB29512A089DB7004D638E5C91C465
+
+
+temp 1: 0C D0 84   
+temp 2: 0C CA 6F
+conductivity 1: 10 76 7B
+conductivity 2: 11 07 AE
+pressure: 80 45 8F
+
+[  0] 0C 	[  1] D0  	[  2] 84
+[  3] 10  	[  4] 76  	[  5] 7B
+[  6] 80  	[  7] 45  	[  8] 8F
+[  9] 0C  	[ 10] CA  	[ 11] 6F
+[ 12] 11  	[ 13] 07  	[ 14] AE
+
+[  0] 12 	[  1] 208  	[  2] 132	f = (12×256) + 208 + 132 / 256 = 3280 Hz
+[  3] 16  	[  4] 118  	[  5] 123	f = (16×256) + 118 + 123 / 256 = 4214 Hz
+[  6] 128  	[  7] 69  	[  8] 143	f = (128×256) + 69 + 143 / 256 = 32837 Hz
+[  9] 12  	[ 10] 202  	[ 11] 111	f = (12×256) + 202 + 111 / 256 = 3274 Hz
+[ 12] 17  	[ 13] 7  	[ 14] 174	f = (17×256) + 7 + 174 / 256 = 4359 Hz
+
+
+107 = 263
+M = 1.279410e-002
+B = -9.215740e+000
+
+temperatur = 0,001279 * 263 - 9,215 = -5,85 °C ???
+ 
+
+pressure: 6
+temp: 2 * 6
+cond: 2 * 6
+wetlab: 3 * 4 (turbidity, fluoro, cdom)
+time: 8
+oxygen: 2 * 4?
+par: 4?
+spar: 4?
+free: 2 * 4?
+alt: 
+ctdstat: 10-12
+
+
+sum: 58 + 16 = 74
