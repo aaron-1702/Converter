@@ -3,10 +3,10 @@
 
 
 temperature(6 byte): 	primary  	0 - 2 byte 
-						secondary 	9 - 11 byte
+			econdary 	9 - 11 byte
 
 conductivity(6 byte):	primary		3 - 5 byte
-						secondary	12 - 14 byte
+			econdary	12 - 14 byte
 
 pressure(3 byte):			6 - 8 byte
 
@@ -14,56 +14,8 @@ pressure(3 byte):			6 - 8 byte
 Frequency f = (Byte 0×256) + Byte 1 + (Byte 2÷256)
 
 
-0C D0 84 	primary temperature
-10 76 7B 	primary conductivity
-80 45 8F 	pressure
-0C CA 6F 	secondary temperatur
-11 07 AE 	secondary conductivity
+0CD08410767B80458F0CCA6F1107AE7D58A3987C41F0DEF2FFFFBE0000BB29512A089DB7004D638E5C91C465
 
-V = 5 (1 - [N ÷ 4095])
-
-7D		01111101		--> N = 011111010101 = 2005		V = 2.5518925518925517
-58		0101	1000
-A3		10100011		--> N = 100010100011 = 2211		V = 2.3003663003663006
-
-98		10011000		--> N = 100110000111 = 2439		V = 2.021978021978022
-7C		0111	1100
-41		01000001		--> N = 110001000001 = 3137		V = 1.1697191697191696
-
-F0		11110000		--> N = 111100001101 = 3853		V = 0.29548229548229554
-DE		1101	1110
-F2		11110010		--> N = 111011110010 = 3826		V = 0.3284493284493284
-
-FF		11111111		--> N = 111111111111 = 4095		V = 0.0
-FF		1111	1111
-BE		10111110		--> N = 111110111110 = 4030		V = 0.07936507936507964
-
-
-00		00000000
-00		00000000
-BB		10111011
-
-
-29		00101001
-51		01010001
-2A		00101010
-
-
-?
-
-08
-9D
-B7
-00
-4D
-63
-8E
-5C
-91
-C4
-65
-
-?
 
 temp 1: 0C D0 84   
 temp 2: 0C CA 6F
