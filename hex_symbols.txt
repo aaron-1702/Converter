@@ -54,12 +54,15 @@ BB		10111011
 08
 9D
 B7
+
 00
 4D
 63
+
 8E
 5C
 91
+
 C4
 65
 
@@ -105,3 +108,42 @@ ctdstat: 10-12
 
 
 sum: 58 + 16 = 74
+
+
+
+def calculate_descent_rate(
+    pressure: np.ndarray,
+    temperature: np.ndarray,
+    salinity: np.ndarray,
+    samplerate: float = 24.0,
+    latitude: float = 54.15516666666667,   # example for emb
+    longitude: float = 0.0
+) -> np.ndarray:
+    """
+    Calculate descent rate from pressure, temperature, salinity with given samplerate.
+    
+    :param pressure: Pressure values in dbar
+    :param temperature: Temperature values in °C
+    :param salinity: Salinity values in PSU
+    :param samplerate: Sampling rate in Hz (default 24.0)
+    :param latitude: Latitude for density calculation
+    :param longitude: Longitude for density calculation
+    :return: Descent rate in m/s
+    """
+    # Zeitvektor erstellen
+    anzahl_messwerte = len(pressure)
+    time_vector = np.arange(0, anzahl_messwerte) / samplerate
+    
+    # dp/dt berechnen
+    dp_dt = np.gradient(pressure, time_vector)  # dBar/s
+    
+    # Dichte berechnen
+    absolute_salinity = gsw.SA_from_SP(salinity, pressure, longitude, latitude)
+    conservative_temperature = gsw.CT_from_t(absolute_salinity, temperature, pressure)
+    rho = gsw.rho(absolute_salinity, conservative_temperature, pressure)  # kg/m³
+    
+    # Sinkrate berechnen
+    g = 9.8  # m/s²
+    dz_dt = dp_dt * (-1 / (rho * g))  # m/s
+    
+    return dz_dt    
