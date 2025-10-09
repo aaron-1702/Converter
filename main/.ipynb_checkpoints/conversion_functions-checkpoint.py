@@ -71,17 +71,22 @@ def convert_spar(
 
     return spar
 
-def convert_ali(
-    alt_m: np.array,
-    time_elapsed: np.array,
-
+def convert_alimeter(
+    voltage: np.array,
+    coefs: Altimeter_Coefficients,
+    units: Literal["m", "ft"] = "m"
 ):
-
-    dz = np.diff(alt_m)
-    dt = np.diff(time_elapsed)
-    descent_rate = dz/dt
-
-    return descent_rate
+    """Converts a raw voltage value for Alimeter to m.
+    
+    :param voltage: raw output voltage from Alimeter sensor
+    :param coefs: calibration coefficients for the Alimeter sensor
+    """
+    alt_m = (voltage * 300)/ coefs.scalefactor + coefs.offset
+    
+    if units == "ft":
+        alt_m *= 3.28084
+    
+    return alt_m
 
 def pressure_from_frequency(
     pressure_counts: np.ndarray, 

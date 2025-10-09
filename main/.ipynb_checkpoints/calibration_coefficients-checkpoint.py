@@ -212,6 +212,10 @@ fluroeco_coefs = ECOCoefficients()
 fluroeco_coefs.slope = 6.00000000e+000
 fluroeco_coefs.offset = 0.0690
 
+fluroeco_coefs2 = ECOCoefficients()
+fluroeco_coefs2.slope = 1.000
+fluroeco_coefs2.offset = 0.000
+
 turbidity_coefs = ECOCoefficients()
 turbidity_coefs.slope = 2.000000
 turbidity_coefs.offset = 0.065000
