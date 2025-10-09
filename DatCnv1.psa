@@ -2,15 +2,13 @@
 <Data_Conversion >
   <Version value="7.26.7.129" />
   <ServerName value="Data Conversion" />
-  <InstrumentPath value="D:\\processing\\tests\\data\\EMB295_003-01_CTD_0003.XMLCON" />
+  <InstrumentPath value="C:\Users\lokadmin\Desktop\Aaron\Converter\Data\basic_emb.XMLCON" />
   <InstrumentMatch value="0" />
-  <InputDir value="D:\processing\tests\data" />
-  <InputFileArray size="1" GrowBy="-1" >
-    <ArrayItem index="0" value="EMB295_003-01_CTD_0003.hex" />
-  </InputFileArray>
-  <OutputDir value="D:\processing\tests\data\tmp" />
+  <InputDir value="C:\Users\lokadmin\Desktop\Aaron\Converter\Data" />
+  <InputFileArray size="0" GrowBy="-1" />
+  <OutputDir value="C:\Users\lokadmin\Desktop\Aaron\Converter\Data" />
   <NameAppend value="" />
-  <OutputFile value="EMB295_003-01_CTD_0003.cnv" />
+  <OutputFile value="" />
   <LastProcessed value="0" />
   <ProcessScansToEnd value="1" />
   <ScansToSkip value="0" />
