@@ -21,20 +21,20 @@ def load_hexstrings_simple(file_path):
     
     return hexstrings 
 
-def load_header_hex(file_path):
+def load_header_hex(file_path, filename='basic_emb_test.cnv'):
     """
     Lädt den Header aus der Hex-Datei und schreibt ihn in basic_emb_test.cnv
     Erstellt die Datei falls sie nicht existiert
     """
-    with open(file_path, 'r') as input_file, open('basic_emb_test.cnv', 'w') as output_file:
+    with open(file_path, 'r') as input_file, open(file_name, 'w') as output_file:
         for line in input_file:
             if line.startswith('*END*'):
                 break
             if not line[0].isdigit() and not line[0].isalpha():
                 output_file.write(line)
 
-def load_header_XMLCON(file_path):
-    with open(file_path, 'r') as xml_file, open('basic_emb_test.cnv', 'a') as cnv_file:
+def load_header_XMLCON(file_path, filename='basic_emb_test.cnv'):
+    with open(file_path, 'r') as xml_file, open(file_name, 'a') as cnv_file:
         content = xml_file.read()
         sensors = re.findall(r'<Sensor index="\d+" SensorID="\d+" >.*?</Sensor>', content, re.DOTALL)
         for sensor in sensors:
