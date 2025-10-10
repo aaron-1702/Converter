@@ -112,7 +112,6 @@ class SPAR_Coefficients:
     ratiomultiplier: float
 
 
-
 temp1_coefs = TemperatureCoefficients()
 temp1_coefs.a0 = 4.33459406e-003
 temp1_coefs.a1 = 6.28735680e-004

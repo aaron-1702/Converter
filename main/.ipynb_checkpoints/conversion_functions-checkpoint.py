@@ -459,3 +459,30 @@ def convert_eco(
 
     return converted
 
+def depth_from_pressure(
+    pressure_in: np.ndarray,
+    latitude: float,
+    depth_units: Literal["m", "ft"] = "m",
+    pressure_units: Literal["dbar", "psi"] = "dbar",
+):
+    """Derive depth from pressure and latitude.
+
+    :param pressure: Numpy array of floats representing pressure, in
+        dbar or psi
+    :param latitude: Latitude (-90.0 to 90.0)
+    :param depth_units: 'm' for meters, 'ft' for feet. Defaults to 'm'.
+    :param pressure_units: 'dbar' for decibars, 'psi' for PSI. Defaults
+        to 'dbar'.
+
+    :return: A numpy array representing depth in meters or feet
+    """
+    pressure = pressure_in.copy()
+    if pressure_units == "psi":
+        pressure /= DBAR_TO_PSI
+
+    depth = -gsw.z_from_p(pressure, latitude)
+
+    if depth_units == "ft":
+        depth *= 3.28084
+
+    return depth

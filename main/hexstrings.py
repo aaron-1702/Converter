@@ -94,3 +94,5 @@ def write_arrays_to_file(*arrays, filename='basic_emb_test.cnv', decimals=6, tot
                     line += " "
             
             file.write(line + "\n")
+
+
