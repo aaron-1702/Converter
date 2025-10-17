@@ -26,7 +26,7 @@ def load_header_hex(file_path, filename='basic_emb_test.cnv'):
     Lädt den Header aus der Hex-Datei und schreibt ihn in basic_emb_test.cnv
     Erstellt die Datei falls sie nicht existiert
     """
-    with open(file_path, 'r') as input_file, open(file_name, 'w') as output_file:
+    with open(file_path, 'r') as input_file, open(filename, 'w') as output_file:
         for line in input_file:
             if line.startswith('*END*'):
                 break
@@ -34,7 +34,7 @@ def load_header_hex(file_path, filename='basic_emb_test.cnv'):
                 output_file.write(line)
 
 def load_header_XMLCON(file_path, filename='basic_emb_test.cnv'):
-    with open(file_path, 'r') as xml_file, open(file_name, 'a') as cnv_file:
+    with open(file_path, 'r') as xml_file, open(filename, 'a') as cnv_file:
         content = xml_file.read()
         sensors = re.findall(r'<Sensor index="\d+" SensorID="\d+" >.*?</Sensor>', content, re.DOTALL)
         for sensor in sensors:
