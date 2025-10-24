@@ -7,7 +7,7 @@ from scipy import stats
 from math import floor
 
 from constants import *
-from calibration_coefficients import *
+from cal_coefficients import *
 
 
 # self-made 
