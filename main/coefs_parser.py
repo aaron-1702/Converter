@@ -3,7 +3,7 @@ from cal_coefficients import *
 
 def parse_xmlcon_to_coefficients(file_path):
     """
-    Extrahiert Kalibrierungskoeffizienten aus XMLCON und gibt sie in der Seabird-kompatiblen Struktur zurück.
+    Extracts calibration coefficients from XMLCON and returns them in the Seabird compatible structure.
     """
 
     with open(file_path, 'r') as f:
@@ -216,14 +216,14 @@ def parse_xmlcon_to_coefficients(file_path):
                 coefficients['spar_coefs'] = coefs
                 
         except Exception as e:
-            print(f"Fehler beim Verarbeiten von Sensor {sensor_type} an Index {sensor.get('index')}: {e}")
+            print(f"Error when processing sensor {sensor_type} on Index {sensor.get('index')}: {e}")
             continue
     
     return coefficients
 
 # Debug-Funktion um alle verfügbaren Keys anzuzeigen
 def print_available_coefficients(coefficients):
-    print("Verfügbare Koeffizienten:")
+    print("Available coefficients:")
     for key, coefs in coefficients.items():
         # Falls das Objekt einen Index hat, zeige ihn an
         index = getattr(coefs, "index", None)
