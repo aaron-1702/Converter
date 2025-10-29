@@ -3,14 +3,17 @@ from cal_coefficients import *
 
 def parse_xmlcon_to_coefficients(file_path):
     """
-    Extracts calibration coefficients from XMLCON and returns them in the Seabird compatible structure.
+    Parses a Sea-Bird XMLCON configuration file and extracts calibration 
+    coefficients for all sensors. Returns a dictionary of coefficient objects
+    keyed by their sensor type and sequence number (e.g., temp1_coefs, cond1_coefs).
     """
 
+    # Read file
     with open(file_path, 'r') as f:
         xml_content = f.read()
 
     
-    # XML parsen
+    # Parse XML
     if isinstance(xml_content, str) and xml_content.strip().startswith('<?xml'):
         root = ET.fromstring(xml_content)
     else:
@@ -18,13 +21,15 @@ def parse_xmlcon_to_coefficients(file_path):
         root = tree.get_root()
     
     coefficients = {}
+
+    # Sensor counters in case more than one of each type exists
     sensor_counters = {
         'Temperature': 1,
         'Conductivity': 1,
         'Oxygen': 1,
     }
     
-    # Durch alle Sensoren iterieren
+    # Find sensor array
     sensor_array = root.find('.//SensorArray')
     if sensor_array is None:
         raise ValueError("SensorArray nicht in XML gefunden")
@@ -34,7 +39,7 @@ def parse_xmlcon_to_coefficients(file_path):
         sensor_element = None
         sensor_index = int(sensor.get('index', -1))
         
-        # Sensor-Typ identifizieren
+        # Identify sensor type based on tag name
         for child in sensor:
             tag = child.tag
             if 'TemperatureSensor' in tag:
@@ -68,13 +73,13 @@ def parse_xmlcon_to_coefficients(file_path):
                 sensor_type = 'SPAR'
                 sensor_element = child
             elif 'NotInUse' in tag:
-                continue  # Nicht verwendete Sensoren überspringen
+                continue  # Skip unused sensors
         
         if sensor_element is None:
             continue
         
         try:
-            # Temperatursensoren
+            # Temperature
             if sensor_type == 'Temperature':
                 counter = sensor_counters['Temperature']
                 key = f"temp{counter}_coefs"
@@ -89,12 +94,11 @@ def parse_xmlcon_to_coefficients(file_path):
                 coefficients[key] = coefs
                 sensor_counters['Temperature'] += 1
             
-            # Leitfähigkeitssensoren
+            # Conductivity
             elif sensor_type == 'Conductivity':
                 counter = sensor_counters['Conductivity']
                 key = f"cond{counter}_coefs"
                 
-                # Verwende equation="1" Koeffizienten
                 coefs_element = sensor_element.find('Coefficients[@equation="1"]')
                 if coefs_element is not None:
                     coefs = ConductivityCoefficients()
@@ -111,7 +115,7 @@ def parse_xmlcon_to_coefficients(file_path):
                     coefficients[key] = coefs
                     sensor_counters['Conductivity'] += 1
             
-            # Drucksensor
+            # Pressure
             elif sensor_type == 'Pressure':
                 coefs = PressureCoefficients()
                 coefs.C1 = float(sensor_element.find('C1').text)
@@ -132,12 +136,11 @@ def parse_xmlcon_to_coefficients(file_path):
                 
                 coefficients['pres_coefs'] = coefs
             
-            # Sauerstoffsensoren
+            # Oxygen
             elif sensor_type == 'Oxygen':
                 counter = sensor_counters['Oxygen']
                 key = f"oxy{counter}_coefs"
                 
-                # Verwende equation="1" Koeffizienten (Sea-Bird equation 2007+)
                 coefs_element = sensor_element.find('CalibrationCoefficients[@equation="1"]')
                 if coefs_element is not None:
                     coefs = Oxygen43Coefficients()
@@ -221,8 +224,10 @@ def parse_xmlcon_to_coefficients(file_path):
     
     return coefficients
 
-# Debug-Funktion um alle verfügbaren Keys anzuzeigen
 def print_available_coefficients(coefficients):
+    """
+    Debug function to print which coefficient sets were extracted.
+    """
     print("Available coefficients:")
     for key, coefs in coefficients.items():
         # Falls das Objekt einen Index hat, zeige ihn an

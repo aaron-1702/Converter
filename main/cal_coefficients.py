@@ -1,3 +1,4 @@
+# Seabird (https://github.com/Sea-BirdScientific/seabirdscientific/tree/main)
 class TemperatureCoefficients:
     """
     :param a0: coefficient
@@ -101,7 +102,7 @@ class ECOCoefficients:
     slope: float
     offset: float
 
-
+# Selfmade
 class Altimeter_Coefficients:
     scalefactor: float
     offset: float
